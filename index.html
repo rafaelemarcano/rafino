@@ -99,7 +99,6 @@
             letter-spacing: 1px;
             flex-grow: 1;
             text-align: center;
-            /* Permite que el texto largo se adapte en móviles */
             word-break: break-all; 
         }
 
@@ -240,24 +239,24 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
         }
 
-        /* Contenedor central del Chat - Adaptado para móviles */
-        .chat-wrapper {
+        /* --- NUEVO: Dashboard de Analíticas Central --- */
+        .dashboard-wrapper {
             flex: 2.5;
-            width: 100%; /* Toma el ancho total de su espacio */
+            width: 100%;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(10, 2, 2, 0.7);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 4px;
+            padding: 25px;
             position: relative;
             box-shadow: 0 15px 35px rgba(0,0,0,0.9);
             box-sizing: border-box;
         }
 
         /* Efecto de marco de contención cibernético */
-        .chat-wrapper::after, .chat-wrapper::before {
+        .dashboard-wrapper::after, .dashboard-wrapper::before {
             content: '';
             position: absolute;
             width: 20px;
@@ -266,14 +265,78 @@
             z-index: 5;
             pointer-events: none;
         }
-        .chat-wrapper::after { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0;}
-        .chat-wrapper::before { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 8px 0;}
+        .dashboard-wrapper::after { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0;}
+        .dashboard-wrapper::before { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 8px 0;}
 
-        /* Iframe fluido al 100% */
-        .chat-wrapper iframe {
-            width: 100%;
-            border-radius: 4px;
-            background: #0a0a0a;
+        /* Grid de métricas */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .metric-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 42, 42, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .metric-title {
+            font-family: var(--font-code);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-size: 26px;
+            color: var(--accent-red);
+            font-weight: bold;
+            margin-top: 8px;
+            text-shadow: 0 0 15px rgba(255, 42, 42, 0.5);
+            font-family: var(--font-ui);
+        }
+
+        /* Simulación de Terminal / Logs */
+        .terminal-logs {
+            background: #000;
+            flex-grow: 1;
+            min-height: 250px;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: var(--font-code);
+            font-size: 12px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 20px rgba(0,0,0,1);
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .log-line {
+            margin-bottom: 8px;
+            line-height: 1.4;
+            opacity: 0.8;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .log-line:last-child {
+            opacity: 1;
+        }
+
+        .log-time { color: var(--accent-red); margin-right: 10px; }
+        .log-sys { color: #4fa8ff; }
+        .log-warn { color: #ffb82e; }
+        .log-ok { color: #24c23b; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 0.8; transform: translateY(0); }
         }
 
         /* Footer */
@@ -299,46 +362,30 @@
         }
 
         /* --- RESPONSIVIDAD (Media Queries) --- */
-
-        /* Para tablets y pantallas medianas */
         @media (max-width: 1200px) {
             .tech-content { 
                 flex-direction: column; 
-                align-items: stretch; /* Permite que los paneles se estiren al 100% */
+                align-items: stretch; 
             }
-            .tech-panel, .chat-wrapper { 
+            .tech-panel, .dashboard-wrapper { 
                 width: 100%; 
                 min-width: unset; 
             }
         }
 
-        /* Para teléfonos móviles */
         @media (max-width: 768px) {
-            body {
-                padding: 10px; /* Reduce los bordes negros externos en móviles */
-            }
-            .terminal-header {
-                padding: 12px 15px;
-            }
-            .terminal-header h1 {
-                font-size: 12px; /* Reduce el texto para que quepa bien */
-            }
-            .tech-content {
-                padding: 15px; /* Menos margen interno */
-                gap: 15px;
-            }
-            .tech-panel {
-                padding: 15px;
-            }
+            body { padding: 10px; }
+            .terminal-header { padding: 12px 15px; }
+            .terminal-header h1 { font-size: 12px; }
+            .tech-content { padding: 15px; gap: 15px; }
+            .tech-panel, .dashboard-wrapper { padding: 15px; }
             .tech-footer {
                 flex-direction: column;
                 gap: 12px;
                 text-align: center;
                 padding: 15px;
             }
-            .chat-wrapper iframe {
-                height: 450px; /* Reduce un poco la altura en celulares para que no ocupe toda la pantalla */
-            }
+            .terminal-logs { min-height: 200px; }
         }
     </style>
 </head>
@@ -352,8 +399,7 @@
                 <div class="dot yellow"></div>
                 <div class="dot green"></div>
             </div>
-            <h1>RaFino@cyber-node:<span class="path">~/chat_matrix</span># ./init_red_protocol.sh<span class="cursor-blink"></span></h1>
-            <!-- El spacer se oculta en móviles para evitar descuadres invisibles -->
+            <h1>RaFino@cyber-node:<span class="path">~/sys_monitor</span># ./start_analytics.sh<span class="cursor-blink"></span></h1>
             <div style="width: 55px; display: none;"></div> 
         </div>
 
@@ -362,16 +408,39 @@
             <div class="tech-panel">
                 <h3>System.Rules <span>[STRICT]</span></h3>
                 <ul class="code-list">
-                    <li>Ejecutar protocolo de respeto mutuo entre todos los nodos conectados.</li>
-                    <li>Bloqueo activo en capa 7 para enlaces maliciosos (Spam Detection).</li>
-                    <li>Evitar el desbordamiento de buffer de texto en la sala (No Flood).</li>
-                    <li>Mantener las transmisiones limpias y legibles en el entorno.</li>
+                    <li>Ejecutar protocolo de seguridad en la red perimetral.</li>
+                    <li>Bloqueo activo en capa 7 para detección de intrusos.</li>
+                    <li>Balanceo de carga habilitado para nodos secundarios.</li>
+                    <li>Mantener las transmisiones cifradas (AES-256).</li>
                 </ul>
             </div>
 
-            <div class="chat-wrapper">
-                <!-- Se quitó el width fijo y se dejó que el CSS maneje el ancho al 100% -->
-                <iframe src="https://decrem.shop/GlobalChat?embed=true" allow="clipboard-write" height="500" frameborder="0" scrolling="no"></iframe>
+            <div class="dashboard-wrapper">
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">CPU Load</div>
+                        <div class="metric-value">34%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">RAM Usage</div>
+                        <div class="metric-value">12.4 <span style="font-size: 14px; color: var(--text-muted)">GB</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Network I/O</div>
+                        <div class="metric-value">845 <span style="font-size: 14px; color: var(--text-muted)">Mb/s</span></div>
+                    </div>
+                </div>
+
+                <div class="terminal-logs">
+                    <div class="log-line"><span class="log-time">[14:02:11]</span> <span class="log-sys">SYS:</span> Iniciando monitoreo de red y chequeo de paquetes...</div>
+                    <div class="log-line"><span class="log-time">[14:02:14]</span> <span class="log-ok">OK:</span> Conexión establecida con el gateway principal.</div>
+                    <div class="log-line"><span class="log-time">[14:02:18]</span> <span class="log-warn">WARN:</span> Pico de latencia detectado en el nodo eu-west-3 (120ms).</div>
+                    <div class="log-line"><span class="log-time">[14:02:22]</span> <span class="log-sys">SYS:</span> Reenrutando tráfico a través de proxy inverso...</div>
+                    <div class="log-line"><span class="log-time">[14:02:25]</span> <span class="log-ok">OK:</span> Tráfico estabilizado. Sistema operando a capacidad óptima.</div>
+                    <div class="log-line"><span class="log-time">[14:02:30]</span> <span class="log-sys">SYS:</span> Awaiting incoming secure connections <span class="cursor-blink"></span></div>
+                </div>
+
             </div>
 
             <div class="tech-panel">
@@ -402,7 +471,7 @@
         </div>
 
         <div class="tech-footer">
-            <span>SESSION_ID: <span style="color: var(--text-main);">0x7F8A9B</span> | Estabilizada</span>
+            <span>SESSION_ID: <span style="color: var(--text-main);">0x7F8A9B</span> | Protocolo Estabilizado</span>
             <span class="footer-tag">SysAdmin: RaFino | Uptime: 99.9%</span>
         </div>
 
