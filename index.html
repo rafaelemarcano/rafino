@@ -99,6 +99,8 @@
             letter-spacing: 1px;
             flex-grow: 1;
             text-align: center;
+            /* Permite que el texto largo se adapte en móviles */
+            word-break: break-all; 
         }
 
         .terminal-header h1 span.path {
@@ -238,10 +240,10 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
         }
 
-        /* Contenedor central del Chat */
+        /* Contenedor central del Chat - Adaptado para móviles */
         .chat-wrapper {
             flex: 2.5;
-            min-width: 728px;
+            width: 100%; /* Toma el ancho total de su espacio */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -251,6 +253,7 @@
             padding: 4px;
             position: relative;
             box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            box-sizing: border-box;
         }
 
         /* Efecto de marco de contención cibernético */
@@ -266,9 +269,11 @@
         .chat-wrapper::after { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0;}
         .chat-wrapper::before { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 8px 0;}
 
+        /* Iframe fluido al 100% */
         .chat-wrapper iframe {
+            width: 100%;
             border-radius: 4px;
-            background: #0a0a0a; /* Por si el iframe tarda en cargar */
+            background: #0a0a0a;
         }
 
         /* Footer */
@@ -293,11 +298,47 @@
             border: 1px solid rgba(255, 42, 42, 0.2);
         }
 
-        /* Responsividad */
+        /* --- RESPONSIVIDAD (Media Queries) --- */
+
+        /* Para tablets y pantallas medianas */
         @media (max-width: 1200px) {
-            .tech-content { flex-direction: column; align-items: center; }
-            .tech-panel { width: 100%; max-width: 840px; }
-            .chat-wrapper { min-width: 100%; max-width: 840px; overflow-x: auto; }
+            .tech-content { 
+                flex-direction: column; 
+                align-items: stretch; /* Permite que los paneles se estiren al 100% */
+            }
+            .tech-panel, .chat-wrapper { 
+                width: 100%; 
+                min-width: unset; 
+            }
+        }
+
+        /* Para teléfonos móviles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; /* Reduce los bordes negros externos en móviles */
+            }
+            .terminal-header {
+                padding: 12px 15px;
+            }
+            .terminal-header h1 {
+                font-size: 12px; /* Reduce el texto para que quepa bien */
+            }
+            .tech-content {
+                padding: 15px; /* Menos margen interno */
+                gap: 15px;
+            }
+            .tech-panel {
+                padding: 15px;
+            }
+            .tech-footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+                padding: 15px;
+            }
+            .chat-wrapper iframe {
+                height: 450px; /* Reduce un poco la altura en celulares para que no ocupe toda la pantalla */
+            }
         }
     </style>
 </head>
@@ -312,7 +353,8 @@
                 <div class="dot green"></div>
             </div>
             <h1>RaFino@cyber-node:<span class="path">~/chat_matrix</span># ./init_red_protocol.sh<span class="cursor-blink"></span></h1>
-            <div style="width: 55px;"></div> 
+            <!-- El spacer se oculta en móviles para evitar descuadres invisibles -->
+            <div style="width: 55px; display: none;"></div> 
         </div>
 
         <div class="tech-content">
@@ -328,7 +370,8 @@
             </div>
 
             <div class="chat-wrapper">
-                <iframe src="https://decrem.shop/GlobalChat?embed=true" allow="clipboard-write" width="870" height="500" frameborder="0" scrolling="no"></iframe>
+                <!-- Se quitó el width fijo y se dejó que el CSS maneje el ancho al 100% -->
+                <iframe src="https://decrem.shop/GlobalChat?embed=true" allow="clipboard-write" height="500" frameborder="0" scrolling="no"></iframe>
             </div>
 
             <div class="tech-panel">
