@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Red Tech Xatframe</title>
+    <style>
+        /* Variables de color premium - Edición Roja */
+        :root {
+            --bg-color: #070202;
+            --panel-bg: rgba(26, 8, 8, 0.55);
+            --border-color: rgba(180, 20, 20, 0.4);
+            --border-highlight: rgba(255, 40, 40, 0.8);
+            --accent-red: #ff2a2a;
+            --glow-red: rgba(255, 42, 42, 0.3);
+            --text-main: #e8d5d5;
+            --text-muted: #9c8282;
+            --font-code: 'Consolas', 'Fira Code', 'Courier New', monospace;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        /* Fondo estilo malla/grid tecnológico premium */
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(200, 20, 20, 0.15), transparent 50%),
+                linear-gradient(rgba(255, 42, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 42, 42, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 35px 35px, 35px 35px;
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            margin: 0;
+            padding: 40px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal Glassmorphism Profundo */
+        .glass-container {
+            width: 100%;
+            max-width: 1350px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 
+                        0 0 20px var(--glow-red) inset,
+                        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Línea superior de acento */
+        .glass-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+            z-index: 10;
+        }
+
+        /* Cabecera estilo Terminal */
+        .terminal-header {
+            background: rgba(10, 2, 2, 0.85);
+            padding: 16px 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+        }
+        .dot.red { background-color: #ff4747; box-shadow: 0 0 10px rgba(255, 71, 71, 0.6); }
+        .dot.yellow { background-color: #ffb82e; }
+        .dot.green { background-color: #24c23b; }
+
+        .terminal-header h1 {
+            margin: 0;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: var(--text-main);
+            font-weight: 500;
+            letter-spacing: 1px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .terminal-header h1 span.path {
+            color: var(--accent-red);
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: var(--accent-red);
+            vertical-align: middle;
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Contenido Principal Grid/Flex */
+        .tech-content {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Paneles Laterales */
+        .tech-panel {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(15, 5, 5, 0.6);
+            border: 1px solid rgba(255, 42, 42, 0.15);
+            border-radius: 8px;
+            padding: 22px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+
+        .tech-panel:hover {
+            border-color: var(--border-highlight);
+        }
+
+        /* Decoración de esquina de panel */
+        .tech-panel::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-red);
+            box-shadow: 0 0 12px var(--accent-red);
+        }
+
+        .tech-panel h3 {
+            font-family: var(--font-code);
+            color: var(--text-main);
+            font-size: 13px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 42, 42, 0.2);
+            padding-bottom: 12px;
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 1.5px;
+        }
+
+        .tech-panel h3 span { 
+            color: var(--accent-red); 
+            font-size: 11px;
+            background: rgba(255, 42, 42, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 42, 42, 0.3);
+        }
+
+        .code-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-family: var(--font-code);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .code-list li {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.5;
+        }
+
+        .code-list li::before {
+            content: '>>';
+            color: var(--accent-red);
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        /* Status Blocks (Redes/Hardware) */
+        .status-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-family: var(--font-code);
+            font-size: 12px;
+            border-left: 3px solid var(--accent-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-val { 
+            color: #ff3333; 
+            text-shadow: 0 0 8px rgba(255, 51, 51, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pulse-min {
+            width: 6px;
+            height: 6px;
+            background: #ff3333;
+            border-radius: 50%;
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.7); }
+            70% { box-shadow: 0 0 0 4px rgba(255, 51, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+        }
+
+        /* Contenedor central del Chat */
+        .chat-wrapper {
+            flex: 2.5;
+            min-width: 728px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+        }
+
+        /* Efecto de marco de contención cibernético */
+        .chat-wrapper::after, .chat-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-red);
+            z-index: 5;
+            pointer-events: none;
+        }
+        .chat-wrapper::after { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0;}
+        .chat-wrapper::before { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 8px 0;}
+
+        .chat-wrapper iframe {
+            border-radius: 4px;
+            background: #0a0a0a; /* Por si el iframe tarda en cargar */
+        }
+
+        /* Footer */
+        .tech-footer {
+            background: rgba(10, 2, 2, 0.85);
+            padding: 15px 30px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-code);
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.3);
+        }
+
+        .footer-tag {
+            color: var(--accent-red);
+            background: rgba(255, 42, 42, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 42, 42, 0.2);
+        }
+
+        /* Responsividad */
+        @media (max-width: 1200px) {
+            .tech-content { flex-direction: column; align-items: center; }
+            .tech-panel { width: 100%; max-width: 840px; }
+            .chat-wrapper { min-width: 100%; max-width: 840px; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-container">
+        
+        <div class="terminal-header">
+            <div class="window-controls">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <h1>root@cyber-node:<span class="path">~/chat_matrix</span># ./init_red_protocol.sh<span class="cursor-blink"></span></h1>
+            <div style="width: 55px;"></div> </div>
+
+        <div class="tech-content">
+            
+            <div class="tech-panel">
+                <h3>System.Rules <span>[STRICT]</span></h3>
+                <ul class="code-list">
+                    <li>Ejecutar protocolo de respeto mutuo entre todos los nodos conectados.</li>
+                    <li>Bloqueo activo en capa 7 para enlaces maliciosos (Spam Detection).</li>
+                    <li>Evitar el desbordamiento de buffer de texto en la sala (No Flood).</li>
+                    <li>Mantener las transmisiones limpias y legibles en el entorno.</li>
+                </ul>
+            </div>
+
+            <div class="chat-wrapper">
+                <iframe src="https://decrem.shop/GlobalChat?embed=true" allow="clipboard-write" width="870" height="500" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <div class="tech-panel">
+                <h3>Network.Status <span>[LIVE]</span></h3>
+                
+                <div class="status-block">
+                    Enlace WAN Externo
+                    <span class="status-val"><div class="pulse-min"></div> ONLINE</span>
+                </div>
+                <div class="status-block">
+                    Mikrotik Cyber-LAN Gateway
+                    <span class="status-val"><div class="pulse-min"></div> ACTIVE</span>
+                </div>
+                <div class="status-block">
+                    Latencia del Nodo Local
+                    <span style="color: var(--text-main); font-weight: bold;">8ms</span>
+                </div>
+                
+                <br>
+                <h3>Hardware.Info <span>[SPEC]</span></h3>
+                <ul class="code-list">
+                    <li>CPU: AMD Ryzen™ 5 3600</li>
+                    <li>GPU: NVIDIA® GeForce® GTX 1080</li>
+                    <li>Net: Gigabit Ethernet / Static IP</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="tech-footer">
+            <span>SESSION_ID: <span style="color: var(--text-main);">0x7F8A9B</span> | Estabilizada</span>
+            <span class="footer-tag">Uptime: 99.9% | Core v3.0</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
